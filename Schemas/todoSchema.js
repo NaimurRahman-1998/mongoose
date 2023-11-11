@@ -22,4 +22,10 @@ todoSchema.methods = {
   },
 };
 
+todoSchema.statics = {
+  findByJs: function () {
+    return this.find({ title: /js/i });
+  },
+};
+
 module.exports = todoSchema;

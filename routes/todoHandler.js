@@ -6,19 +6,32 @@ const router = express.Router();
 const Todo = new mongoose.model("Todo", todoSchema);
 
 // Get/read method
-// router.get("/", async (req, res) => {
-//   try {
-//     const todos = await Todo.find({ status: "active" }).exec();
-//     res.status(200).json({ result: todos });
-//   } catch (error) {}
-// });
-
 router.get("/", async (req, res) => {
+  try {
+    const todos = await Todo.find({ status: "active" }).exec();
+    res.status(200).json({ result: todos });
+  } catch (error) {}
+});
+
+// insrtance method
+router.get("/active", async (req, res) => {
   try {
     const todo = new Todo();
     const data = await todo.findActive();
     res.status(500).json({ data: data });
   } catch (error) {}
+});
+
+// static method
+router.get("/activeStatic", async (req, res) => {
+  try {
+    const data = await Todo.findByJs();
+    res.status(200).json({ data: data });
+  } catch (error) {
+    // Handle any errors appropriately, for example:
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 // get by id
