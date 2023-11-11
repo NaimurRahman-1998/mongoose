@@ -6,10 +6,18 @@ const router = express.Router();
 const Todo = new mongoose.model("Todo", todoSchema);
 
 // Get/read method
+// router.get("/", async (req, res) => {
+//   try {
+//     const todos = await Todo.find({ status: "active" }).exec();
+//     res.status(200).json({ result: todos });
+//   } catch (error) {}
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const todos = await Todo.find({ status: "active" }).exec();
-    res.status(200).json({ result: todos });
+    const todo = new Todo();
+    const data = await todo.findActive();
+    res.status(500).json({ data: data });
   } catch (error) {}
 });
 
@@ -20,6 +28,7 @@ router.get("/:id", async (req, res) => {
   res.json({ result: data });
   res.send("asd");
 });
+
 // add todo
 router.post("/", async (req, res) => {
   try {
@@ -41,6 +50,7 @@ router.post("/many", async (req, res) => {
     res.status(500).send(`Error: ${err.message}`);
   }
 });
+
 //update
 router.put("/:id", async (req, res) => {
   try {
