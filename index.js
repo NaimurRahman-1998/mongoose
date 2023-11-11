@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const todoHandler = require("./routes/todoHandler");
-// Connect to MongoDB
 
 const app = express();
+app.use(express.json());
 
 mongoose
   .connect("mongodb://0.0.0.0:27017/todos")
